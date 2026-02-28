@@ -1,0 +1,5 @@
+{
+  "msft.us": { "pe": 32.5, "roe": 0.42, "debtToEquity": 0.45, "revenueGrowth": 0.12 },
+  "aapl.us": { "pe": 28.1, "roe": 0.38, "debtToEquity": 0.60, "revenueGrowth": 0.08 },
+  "tsla.us": { "pe": 65.0, "roe": 0.22, "debtToEquity": 0.80, "revenueGrowth": 0.25 }
+}
