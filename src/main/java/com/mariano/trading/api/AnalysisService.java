@@ -191,4 +191,20 @@ public class AnalysisService {
             case EVITAR -> 1;
         };
     }
+
+    public List<PricePoint> history(String ticker, int days) {
+        ticker = ticker.toLowerCase().trim();
+
+        List<Candle> candles = client.fetchDailyCandles(ticker);
+        if (candles == null || candles.isEmpty()) {
+            throw new IllegalArgumentException("No hay datos para ticker=" + ticker);
+        }
+
+        int from = Math.max(0, candles.size() - days);
+
+        return candles.subList(from, candles.size())
+                .stream()
+                .map(c -> new PricePoint(c.getDate().toString(), c.getClose()))
+                .toList();
+    }
 }

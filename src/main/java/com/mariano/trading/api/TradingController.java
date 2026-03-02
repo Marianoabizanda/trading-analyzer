@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class TradingController {
 
@@ -19,13 +21,21 @@ public class TradingController {
     }
 
     @GetMapping("/api/scan")
-    public java.util.List<ScanResultDto> scan(@RequestParam String tickers) {
+    public List<ScanResultDto> scan(@RequestParam String tickers) {
 
-        java.util.List<String> list = java.util.Arrays.stream(tickers.split(","))
+        List<String> list = java.util.Arrays.stream(tickers.split(","))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
                 .toList();
 
         return service.scan(list);
+    }
+
+    @GetMapping("/api/history")
+    public List<PricePoint> history(
+            @RequestParam String ticker,
+            @RequestParam(defaultValue = "60") int days
+    ) {
+        return service.history(ticker, days);
     }
 }

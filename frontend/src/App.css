@@ -1,0 +1,194 @@
+:root{
+  --bg: #0b1020;
+  --card: #101a33;
+  --card2: #0f172a;
+  --text: #e9eefc;
+  --muted: rgba(233,238,252,.7);
+  --border: rgba(255,255,255,.10);
+  --accent: #4f8cff;
+  --accent2:#22c55e;
+  --danger:#ef4444;
+
+  --radius: 16px;
+}
+
+body { background: var(--bg); color: var(--text); }
+
+.page { font-family: system-ui, Arial; padding: 18px; max-width: 1250px; margin: 0 auto; }
+
+.header{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 14px;
+}
+.header h1{ margin:0; font-size: 44px; letter-spacing: .2px; }
+.header p{ margin: 6px 0 0; color: var(--muted); }
+
+.controls{
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  margin: 14px 0;
+}
+
+.controlsRow{
+  display:flex;
+  gap:12px;
+  align-items:flex-end;
+  flex-wrap: wrap;
+}
+
+.field{ display:grid; gap:6px; min-width: 260px; flex: 1; }
+.fieldSmall{ min-width: 160px; flex: 0; }
+
+.field span{ font-size: 12px; color: var(--muted); }
+
+.field input, .field select{
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+.field input::placeholder{ color: rgba(233,238,252,.45); }
+
+.primaryBtn{
+  background: linear-gradient(180deg, rgba(79,140,255,1), rgba(67,106,255,1));
+  color: white;
+  border: 0;
+  border-radius: 14px;
+  padding: 11px 14px;
+  cursor: pointer;
+  font-weight: 650;
+  min-width: 140px;
+}
+.primaryBtn:disabled{ opacity: .65; cursor: not-allowed; }
+
+.grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 14px; align-items: start; }
+@media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
+
+.card{
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+  padding: 14px;
+}
+
+.tableWrap{
+  overflow: auto;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,.12);
+}
+table{ width: 100%; border-collapse: collapse; }
+th, td{ padding: 10px; border-bottom: 1px solid var(--border); text-align:left; white-space: nowrap; font-size: 14px; }
+th{ color: rgba(233,238,252,.85); background: rgba(255,255,255,.04); position: sticky; top:0; z-index: 1; }
+tr:hover{ background: rgba(255,255,255,.04); }
+tr.active{ background: rgba(79,140,255,.16); }
+
+.muted{ color: var(--muted); }
+
+.error{
+  background: rgba(239,68,68,.12);
+  border: 1px solid rgba(239,68,68,.35);
+  padding: 10px;
+  border-radius: 14px;
+  margin: 10px 0;
+}
+
+.kpis{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 10px 0; }
+@media (max-width: 980px){ .kpis{ grid-template-columns: repeat(2,1fr); } }
+
+.kpi{
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px;
+  background: rgba(0,0,0,.10);
+}
+.kpiLabel{ font-size: 12px; color: var(--muted); }
+.kpiValue{ font-size: 16px; font-weight: 700; margin-top: 4px; }
+
+/* En vez de “terminal IDE”, lo hacemos tipo panel de analista */
+.pre{
+  background: rgba(0,0,0,.22);
+  color: rgba(233,238,252,.92);
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  overflow: auto;
+  font-size: 13px;
+  line-height: 1.45;
+  max-height: 240px;
+}
+
+.badge { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); font-size: 12px; display: inline-block; }
+.badge-ENTRAR { background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.35); }
+.badge-VIGILAR { background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.35); }
+.badge-SALIR { background: rgba(239,68,68,.12); border-color: rgba(239,68,68,.35); }
+.badge-EVITAR { background: rgba(148,163,184,.12); border-color: rgba(148,163,184,.35); }
+
+.chartBox{
+  height: 160px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px;
+  background: rgba(0,0,0,.10);
+}
+
+.legend{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  margin-top:8px;
+  font-size:12px;
+  opacity:.85;
+}
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  display:inline-block;
+  margin-right:6px;
+}
+.dotClose{ background:#60a5fa; }
+.dotSma20{ background:#f59e0b; }
+.dotSma50{ background:#a78bfa; }
+
+.tt{
+  background: rgba(10, 14, 26, .92);
+  color: rgba(233,238,252,.96);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  padding: 10px 12px;
+  min-width: 160px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+.ttDate{
+  font-weight: 750;
+  font-size: 12px;
+  opacity: .9;
+  margin-bottom: 6px;
+}
+
+.ttRow{
+  display:flex;
+  justify-content:space-between;
+  gap: 16px;
+  font-size: 12px;
+  padding: 3px 0;
+}
+
+.ttKey{ opacity: .75; }
+.ttVal{ font-weight: 700; }
+
+/* Ejes del chart (texto de las fechas) */
+.recharts-cartesian-axis-tick-value {
+  fill: rgba(233,238,252,.7);
+  font-size: 12px;
+}
