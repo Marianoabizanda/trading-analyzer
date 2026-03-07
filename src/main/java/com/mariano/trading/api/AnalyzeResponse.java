@@ -29,4 +29,20 @@ public class AnalyzeResponse {
     public double stopLoss;
     public double takeProfit;
     public long positionSizeShares;
+
+    public Double high20Prev;
+    public Double high50Prev;
+
+    public Boolean isBreakout;
+    public Double breakoutLevel;
+    public Double breakoutPct;
+
+    public String setupType;           // "BREAKOUT" o "NONE"
+    public Integer setupScore;         // 0..100
+    public java.util.List<String> setupReasons; // explicación simple
+
+    public Double ema20;
+    public Double ema50;
+    public Double ema200;
+
 }

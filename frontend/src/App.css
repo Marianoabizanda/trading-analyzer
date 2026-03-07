@@ -158,6 +158,13 @@ tr.active{ background: rgba(79,140,255,.16); }
 .dotClose{ background:#60a5fa; }
 .dotSma20{ background:#f59e0b; }
 .dotSma50{ background:#a78bfa; }
+.dotEma20 {
+  background: #22c55e;
+}
+
+.dotEma50 {
+  background: #ef4444;
+}
 
 .tt{
   background: rgba(10, 14, 26, .92);
@@ -191,4 +198,194 @@ tr.active{ background: rgba(79,140,255,.16); }
 .recharts-cartesian-axis-tick-value {
   fill: rgba(233,238,252,.7);
   font-size: 12px;
+}
+
+.watch { min-width: 320px; flex: 1.6; }
+
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding: 8px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 12px;
+  background: rgba(0,0,0,.10);
+  min-height: 44px;
+  align-items:center;
+}
+
+.chip{
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(233,238,252,.95);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.chip .x{ opacity: .8; margin-left: 6px; }
+
+.watchRow{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.ghostBtn{
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: rgba(233,238,252,.95);
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.presets{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top: 6px;
+}
+
+.pill{
+  border-radius: 999px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.04);
+  color: rgba(233,238,252,.9);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.fieldWide { min-width: 340px; flex: 1.4; }
+
+.analyzeRow{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.cardHead{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.posForm{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top: 12px;
+}
+
+.posForm input{
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px 12px;
+  outline: none;
+  min-width: 180px;
+}
+
+.pillBtn{
+  border-radius: 999px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.04);
+  color: rgba(233,238,252,.92);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.pillBtn.danger{
+  border-color: rgba(239,68,68,.35);
+  background: rgba(239,68,68,.12);
+}
+
+.plPos{ color: rgba(34,197,94,.95); font-weight: 750; }
+.plNeg{ color: rgba(239,68,68,.95); font-weight: 750; }
+
+/* Report boxes (reemplazo de <pre>) */
+.reportBox{
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(0,0,0,.12);
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.reportHead{
+  padding: 10px 12px;
+  font-weight: 750;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,.04);
+}
+
+.reportBody{
+  padding: 10px 12px;
+  color: rgba(233,238,252,.92);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.reportBody ul{
+  margin: 0;
+  padding-left: 18px;
+}
+
+.reportBody li{
+  margin: 6px 0;
+}
+
+
+/* Responsive */
+@media (max-width: 640px) {
+  .header h1 { font-size: 32px; }
+
+  .controlsRow { flex-direction: column; align-items: stretch; }
+  .field, .fieldSmall, .fieldWide { min-width: 100%; flex: 1; }
+
+  .analyzeRow { flex-direction: column; align-items: stretch; }
+  .primaryBtn, .ghostBtn { width: 100%; }
+
+  .kpis { grid-template-columns: 1fr; }
+
+  .legend { flex-wrap: wrap; gap: 10px; }
+
+  .tabs { gap: 8px; }
+  .tabBtn { flex: 1; }
+}
+
+.chartHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.chartControls {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.crossBox {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.crossItem {
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  font-size: 14px;
 }

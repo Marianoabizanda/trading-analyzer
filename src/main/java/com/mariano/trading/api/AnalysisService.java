@@ -7,6 +7,8 @@ import com.mariano.trading.indicators.RSI;
 import com.mariano.trading.indicators.SMA;
 import com.mariano.trading.model.Candle;
 import org.springframework.stereotype.Service;
+import com.mariano.trading.app.SetupScorer;
+import com.mariano.trading.indicators.EMA;
 
 import java.util.List;
 
@@ -23,6 +25,12 @@ public class AnalysisService {
 
     private final FundamentalsClientMock fundClient = new FundamentalsClientMock();
     private final FundamentalScorer fundScorer = new FundamentalScorer();
+
+    private final com.mariano.trading.indicators.HighestHigh highestHigh = new com.mariano.trading.indicators.HighestHigh();
+
+    private final SetupScorer setupScorer = new SetupScorer();
+
+    private final EMA emaCalc = new EMA();
 
     // parámetros default (después los pasamos por query si querés)
     private final double capital = 1_000_000;
@@ -41,6 +49,13 @@ public class AnalysisService {
         List<Double> sma50 = sma.calculate(candles, 50);
         List<Double> rsi14 = rsiCalc.calculate(candles, 14);
         List<Double> atr14 = atrCalc.calculate(candles, 14);
+        List<Double> high20 = highestHigh.calculate(candles, 20);
+        List<Double> high50 = highestHigh.calculate(candles, 50);
+        List<Double> ema20 = emaCalc.calculate(candles, 20);
+        List<Double> ema50 = emaCalc.calculate(candles, 50);
+        List<Double> ema200 = emaCalc.calculate(candles, 200);
+
+
 
         int last = candles.size() - 1;
         Candle lastCandle = candles.get(last);
@@ -50,6 +65,10 @@ public class AnalysisService {
         Double lastRsi14 = rsi14.get(last);
         Double lastAtr14 = atr14.get(last);
 
+        Double lastEma20 = ema20.get(last);
+        Double lastEma50 = ema50.get(last);
+        Double lastEma200 = ema200.get(last);
+
         if (lastSma20 == null || lastSma50 == null || lastRsi14 == null || lastAtr14 == null) {
             throw new IllegalArgumentException("No hay suficientes datos para calcular indicadores en el último día");
         }
@@ -58,6 +77,8 @@ public class AnalysisService {
 
         // En API arrancamos sin posición (después lo conectamos a PositionStore si querés)
         boolean inPosition = false;
+
+
 
         DecisionEngine.Decision decision =
                 engine.decide(close, lastSma20, lastSma50, lastRsi14, lastAtr14, inPosition);
@@ -79,14 +100,65 @@ public class AnalysisService {
         resp.fundamentalReport = fundScorer.report(f);
 
         resp.close = close;
+
         resp.sma20 = lastSma20;
         resp.sma50 = lastSma50;
+
+        resp.ema20 = lastEma20;
+        resp.ema50 = lastEma50;
+        resp.ema200 = lastEma200; // puede ser null y está OK
+
         resp.rsi14 = lastRsi14;
         resp.atr14 = lastAtr14;
 
         resp.techScore = decision.score;
         resp.fundScore = fundScore;
         resp.finalScore = finalScore;
+
+        Double prevHigh20 = (last >= 1) ? high20.get(last - 1) : null;
+        Double prevHigh50 = (last >= 1) ? high50.get(last - 1) : null;
+
+        resp.high20Prev = prevHigh20;
+        resp.high50Prev = prevHigh50;
+
+        // Usamos EMA reales (ya calculadas y guardadas en resp)
+        Double ema20v = resp.ema20;
+        Double ema50v = resp.ema50;
+        Double ema200v = resp.ema200;
+
+        // fallback si falta EMA (por pocos datos)
+        double ema20Safe = (ema20v != null) ? ema20v : resp.sma20;
+        double ema50Safe = (ema50v != null) ? ema50v : resp.sma50;
+        double ema200Safe = (ema200v != null) ? ema200v : resp.sma50;
+
+        // Regime por ahora lo dejamos fijo (en el siguiente paso lo calculamos real)
+        RegimeClassifier.Regime regime = RegimeClassifier.Regime.RANGE;
+
+        SetupScorer.SetupResult setup =
+                setupScorer.scoreBreakout(
+                        resp.close,
+                        resp.high20Prev,
+                        resp.atr14,
+                        resp.rsi14,
+                        ema20Safe,
+                        ema50Safe,
+                        ema200Safe,
+                        regime
+                );
+        resp.setupType = setup.type;
+        resp.setupScore = setup.score;
+        resp.setupReasons = setup.reasons;
+
+        resp.breakoutLevel = resp.high20Prev;
+
+        if (resp.breakoutLevel != null && resp.breakoutLevel > 0) {
+            resp.isBreakout = resp.close > resp.breakoutLevel;
+            resp.breakoutPct = ((resp.close - resp.breakoutLevel) / resp.breakoutLevel) * 100.0;
+        } else {
+            resp.isBreakout = false;
+            resp.breakoutPct = null;
+        }
+
 
         DecisionEngine.Estado finalEstado = decision.estado;
 
